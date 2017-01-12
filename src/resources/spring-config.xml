@@ -1,0 +1,29 @@
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:cassandra="http://www.springframework.org/schema/data/cassandra"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/cql http://www.springframework.org/schema/cql/spring-cql-1.0.xsd
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/data/cassandra http://www.springframework.org/schema/data/cassandra/spring-cassandra.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+	<cassandra:cluster id="cassandraCluster"
+		contact-points="127.0.0.1" port="9042" username="cassandra" password="cassandra" />
+
+	<cassandra:session id="session" cluster-ref="cassandraCluster" 
+		keyspace-name="apiguard" schema-action="RECREATE"/>
+<!-- 		keyspace-name="apiguard" schema-action="CREATE_IF_NOT_EXISTS"/> -->
+
+	<cassandra:session keyspace-name="apiguard" />
+
+	<cassandra:template id="cqlTemplate" />
+	
+	<cassandra:repositories base-package="org.apiguard.repo" />
+
+	<cassandra:mapping entity-base-packages="org.apiguard.entity" />
+	
+	<cassandra:converter />
+	
+
+</beans:beans>
