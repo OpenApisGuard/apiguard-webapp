@@ -12,7 +12,9 @@
 	<import
 		resource="classpath:config/SpringBeans/apiguard-service-dependencies.xml" />
 
-	<context:component-scan base-package="org.apiguard.rest.controller" />
+	<context:component-scan base-package="org.apiguard.rest">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
 
 	<mvc:annotation-driven>
 		<mvc:message-converters>

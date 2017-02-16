@@ -25,14 +25,9 @@
   <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     <property name="locations">
       <list>
-        <value>classpath:config/default/utils.properties</value> 
-      	<value>classpath:config/default/core.properties</value>
-      	<value>classpath*:config/default/feature.properties</value>
-      	<value>classpath*:config/default/component.properties</value>
-      	<value>classpath:config/default/session.properties</value>
-      	<value>classpath:config/default/webapp.properties</value>
-      	<value>classpath:config/default/logging.properties</value>
-      	<value>classpath:config/default/application.properties</value> 
+      	<value>classpath*:config/common/component.properties</value>
+      	<value>classpath:config/common/logging.properties</value>
+      	<value>classpath:config/common/application.properties</value> 
         <value>classpath:global.properties</value>
         <value>classpath:global-passwords.properties</value>
         <value>classpath:local.properties</value>
