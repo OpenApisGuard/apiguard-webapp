@@ -9,8 +9,7 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
 
-	<import
-		resource="classpath:config/SpringBeans/apiguard-service-dependencies.xml" />
+	<import	resource="classpath:config/SpringBeans/apiguard-service-dependencies.xml" />
 
 	<context:component-scan base-package="org.apiguard.rest">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
@@ -29,6 +28,20 @@
     </mvc:annotation-driven>
      
     <bean id="xstreamMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller" />
+
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath*:config/common/component.properties</value>
+				<value>classpath:config/common/logging.properties</value>
+				<value>classpath:config/common/application.properties</value>
+				<value>classpath:global.properties</value>
+				<value>classpath:global-passwords.properties</value>
+				<value>classpath:local.properties</value>
+			</list>
+		</property>
+		<property name="ignoreResourceNotFound" value="true" />
+	</bean>
 
 	<!-- <bean id="contentNegotiationManager"
 		class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
