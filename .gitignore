@@ -1,9 +1,0 @@
-.classpath
-.project
-.settings/
-target/
-*.iml
-.DS_Store
-.idea/
-.idea
-.gitignore
