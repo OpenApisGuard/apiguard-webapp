@@ -3,6 +3,7 @@ package org.apiguard.filters;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpHeaders;
 import org.apiguard.rest.controller.AdminController;
+import org.apiguard.rest.controller.ClientController;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
@@ -65,7 +66,7 @@ public class PreProcessFilter implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
 		RequestWrapper apiReq = new RequestWrapper(request);
-		if (request.getRequestURI().startsWith(AdminController.ADMIN_URL)) {
+		if (request.getRequestURI().startsWith(AdminController.ADMIN_URL) || request.getRequestURI().startsWith(ClientController.ADMIN_URL)) {
 			String token = ((HttpServletRequest) request).getHeader(HttpHeaders.AUTHORIZATION);;
 			if (StringUtils.isEmpty(token) || ! isValid(getSignString(apiReq), token)) {
 				HttpServletResponse resp = (HttpServletResponse) response;
