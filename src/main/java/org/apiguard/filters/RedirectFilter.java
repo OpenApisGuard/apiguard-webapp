@@ -1,6 +1,6 @@
 package org.apiguard.filters;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +24,7 @@ import java.io.IOException;
  * limitations under the License.
  */
 
-@Service
+@Component
 public class RedirectFilter implements Filter {
 
 	@Override

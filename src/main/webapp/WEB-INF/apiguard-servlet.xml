@@ -11,7 +11,7 @@
 
 	<import	resource="classpath:config/SpringBeans/apiguard-service-dependencies.xml" />
 
-	<context:component-scan base-package="org.apiguard.rest">
+	<context:component-scan base-package="org.apiguard">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 
