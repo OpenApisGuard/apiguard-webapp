@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" name="apiguard" packages="">
+    <Appenders>
+        <RollingFile name="RollingFile" fileName="apiguard-${date:yyyy-MM-dd}.log"
+                     filePattern="apiguard-${date:yyyy-MM-dd}-%i.log">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="6" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="250 MB"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="error">
+            <AppenderRef ref="RollingFile"/>
+        </Root>
+        <logger name="org.apiguard" level="info">
+            <AppenderRef ref="RollingFile"/>
+        </logger>
+    </Loggers>
+</Configuration>

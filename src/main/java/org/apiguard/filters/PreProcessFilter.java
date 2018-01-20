@@ -2,6 +2,8 @@ package org.apiguard.filters;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpHeaders;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apiguard.rest.controller.AdminController;
 import org.apiguard.rest.controller.ClientController;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +39,8 @@ import java.io.*;
 
 @Component(value="preProcessFilter")
 @PropertySource("classpath:global.properties")
-public class PreProcessFilter implements Filter {
+public class PreProcessFilter extends BaseFilter {
+	private static final Logger log = LogManager.getLogger(PreProcessFilter.class);
 
 	@Value("${apiguard.system.admin.userid}")
 	private String adminId;
@@ -66,6 +69,9 @@ public class PreProcessFilter implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
 		RequestWrapper apiReq = new RequestWrapper(request);
+
+		logEvent(request);
+
 		if (request.getRequestURI().startsWith(AdminController.ADMIN_URL) || request.getRequestURI().startsWith(ClientController.ADMIN_URL)) {
 			String token = ((HttpServletRequest) request).getHeader(HttpHeaders.AUTHORIZATION);;
 			if (StringUtils.isEmpty(token) || ! isValid(getSignString(apiReq), token)) {
@@ -79,6 +85,7 @@ public class PreProcessFilter implements Filter {
 		}
 
 		chain.doFilter(apiReq, response);
+		logEvent((HttpServletResponse) response);
 	}
 
 	@Override
@@ -139,6 +146,7 @@ public class PreProcessFilter implements Filter {
 			return signature.equals(token);
 		}
 		catch(Exception e) {
+			log.error(e.getMessage(), e);
 			throw new ServletException(e);
 		}
 	}
@@ -180,14 +188,15 @@ public class PreProcessFilter implements Filter {
 					// make an empty string since there is no payload
 					stringBuilder.append("");
 				}
-			} catch (IOException ex) {
-				throw new ServletException("Error reading the request payload", ex);
+			} catch (IOException e) {
+				log.error(e.getMessage(), e);
+				throw new ServletException("Error reading the request payload", e);
 			} finally {
 				if (bufferedReader != null) {
 					try {
 						bufferedReader.close();
 					} catch (IOException iox) {
-						// ignore
+						log.error(iox.getMessage(), iox);
 					}
 				}
 			}

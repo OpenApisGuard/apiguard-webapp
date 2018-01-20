@@ -25,7 +25,7 @@ import java.io.IOException;
  */
 
 @Component
-public class RedirectFilter implements Filter {
+public class RedirectFilter extends BaseFilter {
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -34,6 +34,8 @@ public class RedirectFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
+
+		logEvent((HttpServletRequest) request);
 
 		String queryString = ((HttpServletRequest) request).getQueryString();
 		if (queryString != null) {
@@ -44,6 +46,7 @@ public class RedirectFilter implements Filter {
 			}
 		} else {
 			chain.doFilter(request, response);
+			logEvent((HttpServletResponse) response);
 		}
 	}
 
